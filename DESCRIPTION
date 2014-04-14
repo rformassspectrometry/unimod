@@ -1,0 +1,14 @@
+Package: unimpd
+Type: Package
+Version: 0.1.0
+Title: Managing amino acid modifications for mass spectrometry in R.
+Author: Laurent Gatto and Sebastian Gidd
+Maintainer: Sebastian Gibb <mail@sebastiangibb.de>
+Description: An interface to the community supported database for
+	     amino acide/protein modifications using mass
+	     spectrometry.
+Imports: XML
+Suggests: testthat
+License: GPL-2
+VignetteBuilder: knitr
+biocViews: Proteomics, MassSpectrometry
