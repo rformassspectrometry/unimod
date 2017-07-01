@@ -50,5 +50,6 @@
 #' @import methods
 #' @import Biobase
 #' @importFrom utils packageVersion
+#' @importFrom stats setNames
 #' @importFrom xml2 read_xml xml_find_all xml_attrs xml_text
 NULL
