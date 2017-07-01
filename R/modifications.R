@@ -49,7 +49,7 @@ umodTitle <- function(title) {
     stop("'id' has to be positive.")
   }
   x <- xml_find_all(xml,
-    sprintf("//umod:modifications/umod:mod[@record_id=\"%f\"]", id))
+    sprintf("//umod:modifications/umod:mod[@record_id=\"%d\"]", id))
   if (!length(x)) {
     stop("Id ", id, " was not found!")
   } else {

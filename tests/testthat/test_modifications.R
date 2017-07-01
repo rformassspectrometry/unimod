@@ -37,7 +37,7 @@ test_that(".unimodId", {
   expect_error(unimod:::.umodId(x, -1L), "has to be positive")
   expect_error(unimod:::.umodId(x, "foo"), "has to be numeric")
   expect_error(unimod:::.umodId(x, 1:2), "length one")
-  expect_error(unimod:::.umodId(x, 1e10), "not found")
+  expect_error(unimod:::.umodId(x, 100000), "not found")
 })
 
 test_that(".unimodTitle", {
