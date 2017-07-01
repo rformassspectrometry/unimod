@@ -1,0 +1,3 @@
+Modification <- function(xml) {
+  new
+}
