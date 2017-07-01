@@ -46,3 +46,11 @@ test_that(".unimodTitle", {
   expect_error(unimod:::.umodTitle(x, c("foo", "bar")), "length one")
   expect_error(unimod:::.umodTitle(x, "foo"), "not found")
 })
+
+test_that(".xref", {
+  ref <- data.frame(text=c("14730666", "15350136"),
+                    source=rep("PubMed PMID", 2),
+                    url=character(2), stringsAsFactors=FALSE)
+  expect_equal(unimod:::.xref(xml_find_all(x, "//umod:mod[@record_id=\"1\"]")),
+               ref)
+})

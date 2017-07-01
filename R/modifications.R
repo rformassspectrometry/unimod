@@ -81,3 +81,16 @@ umodTitle <- function(title) {
     Modification(x[[1L]])
   }
 }
+
+#' internal function to query references
+#'
+#' @param xml xml_nodeset, <umod>
+#' @return data.frame
+#' @noRd
+.xref <- function(xml) {
+  nodes <- xml_find_all(xml, ".//umod:xref")
+  data.frame(text=xml_text(xml_find_all(nodes, ".//umod:text")),
+             source=xml_text(xml_find_all(nodes, ".//umod:source")),
+             url=xml_text(xml_find_all(nodes, ".//umod:url")),
+             stringsAsFactors=FALSE)
+}
