@@ -74,7 +74,7 @@ umodTitle <- function(title) {
     stop("'character' has to be of length one.")
   }
   x <- xml_find_all(xml,
-    sprintf("//umod:modifications/umod:mod[@record_id=\"%s\"]", title))
+    sprintf("//umod:modifications/umod:mod[@title=\"%s\"]", title))
   if (!length(x)) {
     stop("Title ", title, " was not found!")
   } else {
