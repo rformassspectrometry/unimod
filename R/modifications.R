@@ -82,6 +82,28 @@ umodTitle <- function(title) {
   }
 }
 
+#' internal function to query delta mass
+#'
+#' @param xml xml_nodeset, <umod>
+#' @return double
+#' @noRd
+.delta <- function(xml) {
+  nodes <- xml_find_all(xml, ".//umod:delta")
+  setNames(as.double(xml_attrs(nodes)[[1L]][c("avge_mass", "mono_mass")]),
+           c("avgMass", "monoMass"))
+}
+
+#' internal function to query composition
+#'
+#' @param xml xml_nodeset, <umod>
+#' @return list, delta masses and composition as named vector
+#' @noRd
+.composition <- function(xml) {
+  nodes <- xml_find_all(xml, ".//umod:element")
+  composition <- do.call(rbind, xml_attrs(nodes))
+  setNames(as.double(composition[, "number"]), composition[, "symbol"])
+}
+
 #' internal function to query references
 #'
 #' @param xml xml_nodeset, <umod>

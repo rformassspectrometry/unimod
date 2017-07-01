@@ -31,6 +31,7 @@ x <- read_xml(paste0(
   '</umod:mod>',
   '</umod:modifications>',
   '</umod:unimod>'))
+nodes <- xml_find_all(x, "//umod:mod[@record_id=\"1\"]")
 
 test_that(".unimodId", {
   expect_error(unimod:::.umodId("xml", 1L), "xml_document")
@@ -47,10 +48,19 @@ test_that(".unimodTitle", {
   expect_error(unimod:::.umodTitle(x, "foo"), "not found")
 })
 
+test_that(".delta", {
+  delta <- c(avgMass=42.0367, monoMass=42.010565)
+  expect_equal(unimod:::.delta(nodes), delta)
+})
+
+test_that(".composition", {
+  composition <- c(H=2, C=2, O=1)
+  expect_equal(unimod:::.composition(nodes), composition)
+})
+
 test_that(".xref", {
   ref <- data.frame(text=c("14730666", "15350136"),
                     source=rep("PubMed PMID", 2),
                     url=character(2), stringsAsFactors=FALSE)
-  expect_equal(unimod:::.xref(xml_find_all(x, "//umod:mod[@record_id=\"1\"]")),
-               ref)
+  expect_equal(unimod:::.xref(nodes), ref)
 })
