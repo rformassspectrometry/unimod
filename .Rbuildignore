@@ -1,0 +1,6 @@
+^README\.md$
+^\.git$
+^\.gitignore$
+^\.travis.yml$
+^playground$
+^notes$
