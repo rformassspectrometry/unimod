@@ -47,5 +47,7 @@
 #' @references \url{https://github.com/ComputationalProteomicsUnit/unimod/}
 #' @keywords package
 #'
+#' @import methods
+#' @import Biobase
 #' @importFrom xml2 read_xml xml_find_all xml_attrs
 NULL

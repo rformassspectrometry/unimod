@@ -1,7 +1,7 @@
 Package: unimod
 Type: Package
 Version: 0.1
-Title: Managing amino acid modifications for mass spectrometry in R.
+Title: Managing amino acid modifications for mass spectrometry
 Author: Laurent Gatto and Sebastian Gidd
 Authors@R: c(person(given = "Laurent", family = "Gatto",
 	            email = "lg390@cam.ac.uk", role = c("aut")),
@@ -11,11 +11,11 @@ Description: An interface to the community supported database for
 	     amino acide/protein modifications using mass
 	     spectrometry.
 Depends:
-    R (>= 3.4),
+    R (>= 3.3),
     methods,
     Biobase
 Imports: xml2
-Suggests: testthat
+Suggests: testthat, knitr
 License: GPL-3
 VignetteBuilder: knitr
 biocViews: Proteomics, MassSpectrometry
