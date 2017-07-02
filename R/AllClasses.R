@@ -12,7 +12,6 @@
 #' @slot specificity data.frame, with site, position and classification of the
 #' modification.
 #' @slot refs data.frame, references listed in the unimod database.
-#'
 setClass("Modification",
   slots=c(id="integer",
           name="character",

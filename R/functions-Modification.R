@@ -1,25 +1,6 @@
 #' @describeIn Modification-class Constructor
+#' @param \ldots arguments passed to the internal constructor.
 #' @export
-#Modification <- function(title, name, id=-1L,
-#                         lastModified=character(),
-#                         approved=logical(),
-#                         deltaAvgMass,
-#                         deltaMonoMass,
-#                         composition=double(),
-#                         specificity,
-#                         refs=data.frame(stringsAsFactors=FALSE)) {
-#  new("Modification",
-#      title=title,
-#      name=name,
-#      id=id,
-#      lastModified=lastModified,
-#      approved=approved,
-#      deltaAvgMass=deltaAvgMass,
-#      deltaMonoMass=deltaMonoMass,
-#      composition=composition,
-#      specificity=specificity,
-#      refs=refs)
-#}
 Modification <- function(...) {
   new("Modification", ...)
 }

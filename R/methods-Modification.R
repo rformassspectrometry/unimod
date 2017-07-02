@@ -18,6 +18,7 @@ setMethod("deltaMonoMass", "Modification", function(object, ...) {
   object@deltaMonoMass
 })
 
+#' @rdname Modification-class
 setMethod("dim", "Modification", function(x) {
   dim(specificity(x))
 })
@@ -26,6 +27,7 @@ setMethod("id", "Modification", function(object, ...) {
   object@id
 })
 
+#' @rdname Modification-class
 setMethod("length", "Modification", function(x) {
   nrow(specificity(x))
 })
@@ -38,6 +40,8 @@ setMethod("name", "Modification", function(object) {
   object@name
 })
 
+#' @param x Modification object
+#' @rdname Modification-class
 setMethod("names", "Modification", function(x) {
   x@name
 })
