@@ -20,6 +20,7 @@ test_that("accessors", {
   expect_identical(id(mod), 1L)
   expect_identical(accession(mod), 1L)
   expect_identical(accessions(mod), 1L)
+  expect_true(approved(mod))
   expect_equal(name(mod), "Acetyl")
   expect_equal(names(mod), "Acetyl")
   expect_equal(description(mod), "Acetylation")

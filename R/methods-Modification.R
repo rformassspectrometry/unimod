@@ -2,6 +2,10 @@ setMethod("accessions", "Modification", function(object, ...) {
   id(object)
 })
 
+setMethod("approved", "Modification", function(object, ...) {
+  object@approved
+})
+
 setMethod("composition", "Modification", function(object, ...) {
   object@composition
 })
