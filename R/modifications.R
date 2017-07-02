@@ -48,12 +48,12 @@ umodTitle <- function(title) {
   if (id < 0L) {
     stop("'id' has to be positive.")
   }
-  x <- xml_find_all(xml,
+  node <- xml_find_first(xml,
     sprintf("//umod:modifications/umod:mod[@record_id=\"%d\"]", id))
-  if (!length(x)) {
+  if (!length(node)) {
     stop("Id ", id, " was not found!")
   } else {
-    Modification(x[[1L]])
+    .Modification(node)
   }
 }
 
@@ -73,12 +73,12 @@ umodTitle <- function(title) {
   if (length(title) != 1L) {
     stop("'character' has to be of length one.")
   }
-  x <- xml_find_all(xml,
+  node <- xml_find_first(xml,
     sprintf("//umod:modifications/umod:mod[@title=\"%s\"]", title))
-  if (!length(x)) {
+ if (!length(node)) {
     stop("Title ", title, " was not found!")
   } else {
-    Modification(x[[1L]])
+    .Modification(node)
   }
 }
 
@@ -88,8 +88,8 @@ umodTitle <- function(title) {
 #' @return double
 #' @noRd
 .title <- function(xml) {
-  setNames(xml_attrs(xml)[[1L]][c("title", "full_name", "date_time_modified",
-                                  "approved", "record_id")],
+  setNames(xml_attrs(xml)[c("title", "full_name", "date_time_modified",
+                            "approved", "record_id")],
            c("title", "name", "lastModified", "approved", "id"))
 }
 
@@ -99,8 +99,8 @@ umodTitle <- function(title) {
 #' @return double
 #' @noRd
 .delta <- function(xml) {
-  nodes <- xml_find_all(xml, ".//umod:delta")
-  setNames(as.double(xml_attrs(nodes)[[1L]][c("avge_mass", "mono_mass")]),
+  node <- xml_find_first(xml, ".//umod:delta")
+  setNames(as.double(xml_attrs(node)[c("avge_mass", "mono_mass")]),
            c("avgMass", "monoMass"))
 }
 
@@ -112,22 +112,24 @@ umodTitle <- function(title) {
 .composition <- function(xml) {
   nodes <- xml_find_all(xml, ".//umod:element")
   composition <- do.call(rbind, xml_attrs(nodes))
-  setNames(as.double(composition[, "number"]), composition[, "symbol"])
+  setNames(as.integer(composition[, "number"]), composition[, "symbol"])
 }
 
-#' internal function to query specifity
+#' internal function to query specificity
 #'
 #' @param xml xml_nodeset, <mod>
+#' @return data.frame
+#' @noRd
 .specificity <- function(xml) {
   nodes <- xml_find_all(xml, ".//umod:specificity")
   sp <- do.call(rbind, xml_attrs(nodes))
-  sp <- sp[order(sp[, "spec_group"]),]
+  sp <- sp[order(sp[, "spec_group"]),, drop=FALSE]
   data.frame(site=sp[, "site"],
              position=sp[, "position"],
              classification=sp[, "classification"],
              hidden=sp[, "hidden"] == "1",
              group=as.integer(sp[, "spec_group"]),
-             stringsAsFactors=FALSE)
+             stringsAsFactors=FALSE, row.names=seq(nrow(sp)))
 }
 
 #' internal function to query references
