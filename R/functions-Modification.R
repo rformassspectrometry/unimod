@@ -32,9 +32,9 @@ Modification <- function(...) {
 .Modification <- function(xml) {
   title <- .title(xml)
   delta <- .delta(xml)
-  Modification(title=unname(unname(title["title"])),
-               name=unname(title["name"]),
-               id=unname(as.integer(title["id"])),
+  Modification(id=unname(as.integer(title["id"])),
+               name=unname(unname(title["name"])),
+               description=unname(title["description"]),
                lastModified=unname(title["lastModified"]),
                approved=unname(title["approved"] == "1"),
                deltaAvgMass=unname(delta["avgMass"]),

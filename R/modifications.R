@@ -88,9 +88,9 @@ umodTitle <- function(title) {
 #' @return double
 #' @noRd
 .title <- function(xml) {
-  setNames(xml_attrs(xml)[c("title", "full_name", "date_time_modified",
-                            "approved", "record_id")],
-           c("title", "name", "lastModified", "approved", "id"))
+  setNames(xml_attrs(xml)[c("record_id", "title", "full_name",
+                            "date_time_modified", "approved")],
+           c("id", "name", "description", "lastModified", "approved"))
 }
 
 #' internal function to query delta mass

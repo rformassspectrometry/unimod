@@ -37,7 +37,7 @@ ref <- data.frame(text=c("14730666", "15350136"),
                   source=rep("PubMed PMID", 2),
                   url=character(2), stringsAsFactors=FALSE)
 
-mod <- new("Modification", title="Acetyl", name="Acetylation", id=1L,
+mod <- new("Modification", id=1L, name="Acetyl", description="Acetylation",
            lastModified="2008-02-15 05:20:02", approved=TRUE,
            deltaAvgMass=42.0367, deltaMonoMass=42.010565,
            composition=c(H=2L, C=2L, O=1L), specificity=sp, refs=ref)
@@ -60,8 +60,8 @@ test_that(".unimodTitle", {
 })
 
 test_that(".title", {
-  title <- c(title="Acetyl", name="Acetylation",
-             lastModified="2008-02-15 05:20:02", approved="1", id="1")
+  title <- c(id="1", name="Acetyl", description="Acetylation",
+             lastModified="2008-02-15 05:20:02", approved="1")
   expect_equal(unimod:::.title(node), title)
 })
 

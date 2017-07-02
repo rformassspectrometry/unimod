@@ -4,11 +4,12 @@ setMethod("show", "Modification", function(object) {
   cat("- General:\n")
   group <- c(paste(class(object), "version"),
              "Accession number/id",
-             "PSI-MS/Interim Name:",
+             "PSI-MS/Interim Name",
+             "Description",
              "Composition",
              paste("Delta", c("Average", "Monoisotopic"), "Mass"))
   value <- c(paste0(classVersion(object)[[class(object)]], collapse="."),
-             object@id, object@name,
+             object@id, object@name, object@description,
              paste0(names(object@composition), "(", object@composition, ")",
                     collapse=" "),
              object@deltaAvgMass, object@deltaMonoMass)
