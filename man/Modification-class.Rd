@@ -6,9 +6,7 @@
 \alias{Modification}
 \title{Modification class}
 \usage{
-Modification(title, name, id = -1L, lastModified = character(),
-  approved = logical(), deltaAvgMass, deltaMonoMass, composition = double(),
-  specificity, refs = data.frame(stringsAsFactors = FALSE))
+Modification(...)
 }
 \description{
 Modification class
@@ -21,11 +19,11 @@ Modification class
 \section{Slots}{
 
 \describe{
-\item{\code{title}}{character, unimod title.}
-
-\item{\code{name}}{character, unimod full_name.}
-
 \item{\code{id}}{integer, unimod record_id.}
+
+\item{\code{name}}{character, unimod PSI-MS name/title.}
+
+\item{\code{description}}{character, unimod full_name.}
 
 \item{\code{lastModified}}{character, time of last modification.}
 

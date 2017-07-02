@@ -2,8 +2,10 @@
 
 export(Modification)
 export(umodId)
+export(umodName)
 export(umodTitle)
 import(Biobase)
+import(ProtGenerics)
 import(methods)
 importFrom(stats,setNames)
 importFrom(utils,packageVersion)

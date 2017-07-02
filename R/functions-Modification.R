@@ -43,3 +43,8 @@ Modification <- function(...) {
                specificity=.specificity(xml),
                refs=.xref(xml))
 }
+
+#' @param object Modification
+#' @return integer, accession number/id.
+#' @noRd
+accession <- accessions # just an alias

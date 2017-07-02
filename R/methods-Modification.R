@@ -1,5 +1,43 @@
-#' @param object Modification
-#' @noRd
+setMethod("accessions", "Modification", function(object, ...) {
+  id(object)
+})
+
+setMethod("composition", "Modification", function(object, ...) {
+  object@composition
+})
+
+setMethod("description", "Modification", function(object, ...) {
+  object@description
+})
+
+setMethod("deltaAvgMass", "Modification", function(object, ...) {
+  object@deltaAvgMass
+})
+
+setMethod("deltaMonoMass", "Modification", function(object, ...) {
+  object@deltaMonoMass
+})
+
+setMethod("id", "Modification", function(object, ...) {
+  object@id
+})
+
+setMethod("mass", "Modification", function(object, ...) {
+  deltaMonoMass(object, ...)
+})
+
+setMethod("name", "Modification", function(object) {
+  object@name
+})
+
+setMethod("names", "Modification", function(x) {
+  x@name
+})
+
+setMethod("references", "Modification", function(object, ...) {
+  object@refs
+})
+
 setMethod("show", "Modification", function(object) {
   cat("- General:\n")
   group <- c(paste(class(object), "version"),
@@ -22,3 +60,6 @@ setMethod("show", "Modification", function(object) {
   invisible(NULL)
 })
 
+setMethod("specificity", "Modification", function(object, ...) {
+  object@specificity
+})

@@ -1,8 +1,8 @@
 #' Modification class
 #'
-#' @slot title character, unimod title.
-#' @slot name character, unimod full_name.
 #' @slot id integer, unimod record_id.
+#' @slot name character, unimod PSI-MS name/title.
+#' @slot description character, unimod full_name.
 #' @slot lastModified character, time of last modification.
 #' @slot approved logical, approved?
 #' @slot deltaAvgMass double, unimod delta avge_mass.
@@ -35,7 +35,7 @@ setClass("Modification",
                       deltaAvgMass=double(),
                       deltaMonoMass=double(),
                       composition=integer(),
-                      specifity=data.frame(stringsAsFactors=FALSE),
+                      specificity=data.frame(stringsAsFactors=FALSE),
                       refs=data.frame(stringsAsFactors=FALSE)
   )
 )

@@ -49,6 +49,7 @@
 #'
 #' @import methods
 #' @import Biobase
+#' @import ProtGenerics
 #' @importFrom utils packageVersion
 #' @importFrom stats setNames
 #' @importFrom xml2 read_xml xml_find_all xml_find_first xml_attrs xml_text

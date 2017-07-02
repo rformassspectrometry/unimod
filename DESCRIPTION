@@ -13,7 +13,8 @@ Description: An interface to the community supported database for
 Depends:
     R (>= 3.3),
     methods,
-    Biobase
+    Biobase,
+    ProtGenerics
 Imports: xml2
 Suggests: testthat, knitr
 License: GPL-3
