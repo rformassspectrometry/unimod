@@ -3,17 +3,22 @@
 \name{umodId}
 \alias{umodId}
 \alias{umodTitle}
+\alias{umodName}
 \alias{umodTitle}
-\title{Find Modification by id/title.}
+\title{Find Modification by id/name/title.}
 \usage{
 umodId(id)
+
+umodName(name)
 
 umodTitle(title)
 }
 \arguments{
 \item{id}{integer, id of the modification.}
 
-\item{title}{character, title of the modification.}
+\item{name}{character, PSI-MS name/title of the modification.}
+
+\item{title}{character, PSI-MS name/title of the modification.}
 }
 \value{
 object of class Modification.

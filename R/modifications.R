@@ -1,4 +1,4 @@
-#' Find Modification by id/title.
+#' Find Modification by id/name/title.
 #'
 #' This function allows to query the unimod database by the \emph{id} or
 #' \emph{title} of specific modification and returns an
@@ -22,12 +22,20 @@ umodId <- function(id) {
   .umodId(.unimodDb(), id)
 }
 
-#' @param title character, title of the modification.
+#' @param name character, PSI-MS name/title of the modification.
+#' @rdname umodId
+#' @export
+umodName <- function(name) {
+  .umodTitle(.unimodDb(), name)
+}
+
+#' @param title character, PSI-MS name/title of the modification.
 #' @rdname umodId
 #' @export
 umodTitle <- function(title) {
   .umodTitle(.unimodDb(), title)
 }
+
 
 #' internal function to query Modification by id
 #'
