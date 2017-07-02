@@ -131,7 +131,7 @@ umodTitle <- function(title) {
 .specificity <- function(xml) {
   nodes <- xml_find_all(xml, ".//umod:specificity")
   sp <- do.call(rbind, xml_attrs(nodes))
-  sp <- sp[order(sp[, "spec_group"]),, drop=FALSE]
+  sp <- sp[order(as.numeric(sp[, "spec_group"])),, drop=FALSE]
   data.frame(site=sp[, "site"],
              position=sp[, "position"],
              classification=sp[, "classification"],
