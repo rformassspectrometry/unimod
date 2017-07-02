@@ -32,6 +32,12 @@ test_that("accessors", {
   expect_equal(length(mod), 3)
   expect_equal(composition(mod), c(H=2L, C=2L, O=1L))
   expect_equal(specificity(mod), sp)
+  expect_equal(specificity(mod, all=FALSE), sp[1,,drop=FALSE])
+  hcol <- which(colnames(sp) == "hidden")
+  mod@specificity <- sp[,-hcol]
+  expect_equal(specificity(mod), sp[,-hcol])
+  expect_equal(specificity(mod, all=FALSE), sp[,-hcol])
+  mod@specificity <- sp
   expect_equal(references(mod), ref)
 })
 

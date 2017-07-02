@@ -75,6 +75,10 @@ setMethod("show", "Modification", function(object) {
   invisible(NULL)
 })
 
-setMethod("specificity", "Modification", function(object, ...) {
-  object@specificity
+setMethod("specificity", "Modification", function(object, all=TRUE, ...) {
+  if (!all && "hidden" %in% colnames(object@specificity)) {
+    object@specificity[!object@specificity$hidden,,drop=FALSE]
+  } else {
+    object@specificity
+  }
 })
