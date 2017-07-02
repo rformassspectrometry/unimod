@@ -34,3 +34,14 @@ test_that("accessors", {
   expect_equal(specificity(mod), sp)
   expect_equal(references(mod), ref)
 })
+
+test_that("validation", {
+  expect_true(validObject(mod))
+  expect_error(validObject(new("Modification")), "'deltaMonoMass' has to be")
+  expect_error(validObject(new("Modification", deltaMonoMass=1)),
+               "not be empty")
+  expect_error(validObject(new("Modification",
+                               deltaMonoMass=1,
+                               specificity=data.frame(foo=1:2, bar=1:2))),
+               "'site' or 'position' column")
+})

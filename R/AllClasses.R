@@ -36,6 +36,8 @@ setClass("Modification",
                       deltaMonoMass=double(),
                       composition=integer(),
                       specificity=data.frame(stringsAsFactors=FALSE),
-                      refs=data.frame(stringsAsFactors=FALSE)
-  )
+                      refs=data.frame(stringsAsFactors=FALSE)),
+  validity=function(object) {
+    .validModification(object)
+  }
 )

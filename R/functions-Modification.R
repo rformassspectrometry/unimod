@@ -48,3 +48,28 @@ Modification <- function(...) {
 #' @return integer, accession number/id.
 #' @noRd
 accession <- accessions # just an alias
+
+#' Modification validation function
+#'
+#' @param object Modification
+#' @return logical (TRUE) or character of error messages
+#' @noRd
+.validModification <- function(object) {
+  msg <- character()
+
+  if (length(object@deltaMonoMass) != 1L ||
+      !is.double(object@deltaMonoMass)) {
+    msg <- c(msg, "'deltaMonoMass' has to be a 'double' of length one.")
+  }
+  if (!nrow(object@specificity)) {
+    msg <- c(msg, "'specificity' should not be empty.")
+  }
+  if (!all(c("site", "position") %in% colnames(object@specificity))) {
+    msg <- c(msg, "'specificity' doesn't have a 'site' or 'position' column.")
+  }
+  if (length(msg)) {
+    msg
+  } else {
+    TRUE
+  }
+}
