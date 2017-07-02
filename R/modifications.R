@@ -118,7 +118,7 @@ umodTitle <- function(title) {
 #' @return list, delta masses and composition as named vector
 #' @noRd
 .composition <- function(xml) {
-  nodes <- xml_find_all(xml, ".//umod:element")
+  nodes <- xml_find_all(xml, ".//umod:delta/umod:element")
   composition <- do.call(rbind, xml_attrs(nodes))
   setNames(as.integer(composition[, "number"]), composition[, "symbol"])
 }
