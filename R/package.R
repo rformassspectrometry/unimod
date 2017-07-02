@@ -48,8 +48,9 @@
 #' @keywords package
 #'
 #' @import methods
-#' @import Biobase
-#' @import ProtGenerics
+#' @importClassesFrom Biobase Versioned
+#' @importFrom Biobase classVersion description
+#' @importFrom ProtGenerics accessions mass
 #' @importFrom utils packageVersion
 #' @importFrom stats setNames
 #' @importFrom xml2 read_xml xml_find_all xml_find_first xml_attrs xml_text
