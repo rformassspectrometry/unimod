@@ -82,6 +82,17 @@ umodTitle <- function(title) {
   }
 }
 
+#' internal function to query title/id/lastmod
+#'
+#' @param xml xml_nodeset, <mod>
+#' @return double
+#' @noRd
+.title <- function(xml) {
+  setNames(xml_attrs(xml)[[1L]][c("title", "full_name", "date_time_modified",
+                                  "approved", "record_id")],
+           c("title", "name", "lastModified", "approved", "id"))
+}
+
 #' internal function to query delta mass
 #'
 #' @param xml xml_nodeset, <mod>

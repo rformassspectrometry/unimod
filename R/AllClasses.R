@@ -4,6 +4,7 @@
 #' @slot name character, unimod full_name.
 #' @slot id integer, unimod record_id.
 #' @slot lastModified character, time of last modification.
+#' @slot approved logical, approved?
 #' @slot deltaAvgMass double, unimod delta avge_mass.
 #' @slot deltaMonoMass double, unimod delta mono_mass.
 #' @slot composition integer, named vector. The names are the titles of unimod
@@ -17,6 +18,7 @@ setClass("Modification",
           name="character",
           id="integer",
           lastModified="character",
+          approved="logical",
           deltaAvgMass="numeric",
           deltaMonoMass="numeric",
           composition="integer",
@@ -29,6 +31,7 @@ setClass("Modification",
                       name=character(),
                       id=integer(),
                       lastModified=character(),
+                      approved=logical(),
                       deltaAvgMass=double(),
                       deltaMonoMass=double(),
                       composition=integer(),

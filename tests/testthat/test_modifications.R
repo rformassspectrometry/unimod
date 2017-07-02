@@ -41,6 +41,12 @@ test_that(".unimodTitle", {
   expect_error(unimod:::.umodTitle(x, "foo"), "not found")
 })
 
+test_that(".title", {
+  title <- c(title="Acetyl", name="Acetylation",
+             lastModified="2008-02-15 05:20:02", approved="1", id="1")
+  expect_equal(unimod:::.title(nodes), title)
+})
+
 test_that(".delta", {
   delta <- c(avgMass=42.0367, monoMass=42.010565)
   expect_equal(unimod:::.delta(nodes), delta)
