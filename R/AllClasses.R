@@ -1,3 +1,17 @@
+#' Modification class
+#'
+#' @slot title character, unimod title.
+#' @slot name character, unimod full_name.
+#' @slot id integer, unimod record_id.
+#' @slot lastModified character, time of last modification.
+#' @slot deltaAvgMass double, unimod delta avge_mass.
+#' @slot deltaMonoMass double, unimod delta mono_mass.
+#' @slot composition integer, named vector. The names are the titles of unimod
+#' elements. The items are the number of the elements.
+#' @slot specifity data.frame, with site, position and classification of the
+#' modification.
+#' @slot refs data.frame, references listed in the unimod database.
+#'
 setClass("Modification",
   slots=c(title="character",
           name="character",
