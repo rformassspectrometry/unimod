@@ -48,18 +48,25 @@ setMethod("references", "Modification", function(object, ...) {
 
 setMethod("show", "Modification", function(object) {
   cat("- General:\n")
-  group <- c(paste(class(object), "version"),
-             "Accession number/id",
-             "PSI-MS/Interim Name",
-             "Description",
-             "Composition",
-             paste("Delta", c("Average", "Monoisotopic"), "Mass"))
-  value <- c(paste0(classVersion(object)[[class(object)]], collapse="."),
-             object@id, object@name, object@description,
-             paste0(names(object@composition), "(", object@composition, ")",
+  group <- c(vers=paste(class(object), "version"),
+             acce="Accession number/id",
+             name="PSI-MS/Interim Name",
+             desc="Description",
+             comp="Composition",
+             setNames(paste("Delta", c("Average", "Monoisotopic"), "Mass"),
+                      c("avgm", "mono")),
+             appr="Approved")
+  value <- c(vers=paste0(classVersion(object)[[class(object)]], collapse="."),
+             acce=object@id,
+             name=object@name,
+             desc=object@description,
+             comp=paste0(names(object@composition), "(", object@composition, ")",
                     collapse=" "),
-             object@deltaAvgMass, object@deltaMonoMass)
-  cat(paste0("  ", format(group, justify="left"), ": ",
+             avgm=object@deltaAvgMass,
+             mono=object@deltaMonoMass,
+             appr=object@approved)
+  cat(paste0("  ", format(group[names(group) %in% names(value)],
+                          justify="left"), ": ",
              format(value, justify="right"), collapse="\n"), "\n")
   cat("- Specificity:\n")
   print(object@specificity)
