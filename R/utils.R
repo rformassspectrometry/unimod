@@ -5,4 +5,3 @@
   f <- system.file(file.path("extdata", "unimod.xml"), package="unimod")
   read_xml(f)
 }
-
