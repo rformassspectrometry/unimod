@@ -8,7 +8,7 @@
 #' @slot deltaMonoMass double, unimod delta mono_mass.
 #' @slot composition integer, named vector. The names are the titles of unimod
 #' elements. The items are the number of the elements.
-#' @slot specifity data.frame, with site, position and classification of the
+#' @slot specificity data.frame, with site, position and classification of the
 #' modification.
 #' @slot refs data.frame, references listed in the unimod database.
 #'
@@ -20,7 +20,7 @@ setClass("Modification",
           deltaAvgMass="numeric",
           deltaMonoMass="numeric",
           composition="integer",
-          specifity="data.frame",
+          specificity="data.frame",
           refs="data.frame"),
   contains=c("VersionedBiobase"),
   prototype=prototype(new("VersionedBiobase",

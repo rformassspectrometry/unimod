@@ -84,7 +84,7 @@ umodTitle <- function(title) {
 
 #' internal function to query delta mass
 #'
-#' @param xml xml_nodeset, <umod>
+#' @param xml xml_nodeset, <mod>
 #' @return double
 #' @noRd
 .delta <- function(xml) {
@@ -95,7 +95,7 @@ umodTitle <- function(title) {
 
 #' internal function to query composition
 #'
-#' @param xml xml_nodeset, <umod>
+#' @param xml xml_nodeset, <mod>
 #' @return list, delta masses and composition as named vector
 #' @noRd
 .composition <- function(xml) {
@@ -104,9 +104,24 @@ umodTitle <- function(title) {
   setNames(as.double(composition[, "number"]), composition[, "symbol"])
 }
 
+#' internal function to query specifity
+#'
+#' @param xml xml_nodeset, <mod>
+.specificity <- function(xml) {
+  nodes <- xml_find_all(xml, ".//umod:specificity")
+  sp <- do.call(rbind, xml_attrs(nodes))
+  sp <- sp[order(sp[, "spec_group"]),]
+  data.frame(site=sp[, "site"],
+             position=sp[, "position"],
+             classification=sp[, "classification"],
+             hidden=sp[, "hidden"] == "1",
+             group=as.integer(sp[, "spec_group"]),
+             stringsAsFactors=FALSE)
+}
+
 #' internal function to query references
 #'
-#' @param xml xml_nodeset, <umod>
+#' @param xml xml_nodeset, <mod>
 #' @return data.frame
 #' @noRd
 .xref <- function(xml) {
