@@ -18,8 +18,16 @@ setMethod("deltaMonoMass", "Modification", function(object, ...) {
   object@deltaMonoMass
 })
 
+setMethod("dim", "Modification", function(x) {
+  dim(specificity(x))
+})
+
 setMethod("id", "Modification", function(object, ...) {
   object@id
+})
+
+setMethod("length", "Modification", function(x) {
+  nrow(specificity(x))
 })
 
 setMethod("mass", "Modification", function(object, ...) {
