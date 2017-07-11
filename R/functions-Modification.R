@@ -25,10 +25,62 @@ Modification <- function(...) {
                refs=.xref(xml))
 }
 
-#' @param object Modification
+#' @rdname Modification-class
 #' @return integer, accession number/id.
-#' @noRd
-accession <- accessions # just an alias
+#' @aliases accession id accessions accessions,Modification-method
+#' @export
+accession <- id <- accessions # just an alias
+
+#' @rdname Modification-class
+#' @param object Modification
+#' @return double, named vector
+#' @export
+composition <- function(object) {
+  .isModification(object)
+  object@composition
+}
+
+#' @describeIn Modification-class mass
+#' @return double, delta average mass
+#' @export
+deltaAvgMass <- function(object) {
+  .isModification(object)
+  object@deltaAvgMass
+}
+
+#' @describeIn Modification-class mass
+#' @return double, delta monoisotopic mass
+#' @export
+deltaMonoMass <- function(object) {
+  .isModification(object)
+  object@deltaMonoMass
+}
+
+#' @describeIn Modification-class name
+#' @return character, PSI name
+#' @export
+name <- names # just an alias
+
+#' @describeIn Modification-class references
+#' @return data.frame, with
+#' @export
+references <- function(object) {
+  .isModification(object)
+  object@refs
+}
+
+#' @describeIn Modification-class specificity
+#' @param hidden logical, show hidden specificities (default: TRUE)?
+#' @return data.frame, with specificities
+#' @export
+specificity <- function(object, hidden=TRUE, ...) {
+  .isModification(object)
+  if (!hidden && "hidden" %in% colnames(object@specificity)) {
+    object@specificity[!object@specificity$hidden,,drop=FALSE]
+  } else {
+    object@specificity
+  }
+}
 
 #' Modification validation function
 #'

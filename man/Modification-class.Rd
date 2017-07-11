@@ -5,12 +5,36 @@
 \name{Modification-class}
 \alias{Modification-class}
 \alias{Modification}
+\alias{accession}
+\alias{id}
+\alias{accessions}
+\alias{accessions,Modification-method}
+\alias{composition}
+\alias{deltaAvgMass}
+\alias{deltaMonoMass}
+\alias{name}
+\alias{references}
+\alias{specificity}
 \alias{dim,Modification-method}
 \alias{length,Modification-method}
 \alias{names,Modification-method}
 \title{Modification class}
 \usage{
 Modification(...)
+
+accessions(object, ...)
+
+composition(object)
+
+deltaAvgMass(object)
+
+deltaMonoMass(object)
+
+name()
+
+references(object)
+
+specificity(object, hidden = TRUE, ...)
 
 \S4method{dim}{Modification}(x)
 
@@ -19,9 +43,28 @@ Modification(...)
 \S4method{names}{Modification}(x)
 }
 \arguments{
+\item{object}{Modification}
+
+\item{hidden}{logical, show hidden specificities (default: TRUE)?}
+
 \item{x}{Modification object}
 
 \item{\ldots}{arguments passed to the internal constructor.}
+}
+\value{
+integer, accession number/id.
+
+double, named vector
+
+double, delta average mass
+
+double, delta monoisotopic mass
+
+character, PSI name
+
+data.frame, with
+
+data.frame, with specificities
 }
 \description{
 Modification class
@@ -29,6 +72,16 @@ Modification class
 \section{Functions}{
 \itemize{
 \item \code{Modification}: Constructor
+
+\item \code{deltaAvgMass}: mass
+
+\item \code{deltaMonoMass}: mass
+
+\item \code{name}: name
+
+\item \code{references}: references
+
+\item \code{specificity}: specificity
 }}
 
 \section{Slots}{
