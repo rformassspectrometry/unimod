@@ -56,7 +56,7 @@ setMethod("references", "Modification", function(object, ...) {
 
 setMethod("show", "Modification", function(object) {
   cat("- General:\n")
-  group <- c(vers=paste(class(object), "version"),
+  group <- c(objc="Class",
              acce="Accession number/id",
              name="PSI-MS/Interim Name",
              desc="Description",
@@ -64,7 +64,7 @@ setMethod("show", "Modification", function(object) {
              setNames(paste("Delta", c("Average", "Monoisotopic"), "Mass"),
                       c("avgm", "mono")),
              appr="Approved")
-  value <- c(vers=paste0(classVersion(object)[[class(object)]], collapse="."),
+  value <- c(objc=class(object),
              acce=object@id,
              name=object@name,
              desc=object@description,

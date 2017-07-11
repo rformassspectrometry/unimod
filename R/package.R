@@ -48,8 +48,6 @@
 #' @keywords package
 #'
 #' @import methods
-#' @importClassesFrom Biobase Versioned
-#' @importFrom Biobase classVersion description
 #' @importFrom ProtGenerics accessions mass
 #' @importFrom utils packageVersion
 #' @importFrom stats setNames
