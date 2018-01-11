@@ -47,10 +47,5 @@
 #' @references \url{https://github.com/ComputationalProteomicsUnit/unimod/}
 #' @keywords package
 #'
-#' @import methods
-#' @importFrom ProtGenerics accessions mass
 #' @importFrom utils packageVersion
-#' @importFrom stats setNames
-#' @importFrom xml2 read_xml xml_find_all xml_find_first xml_attrs xml_text
-#' xml_length
 NULL
