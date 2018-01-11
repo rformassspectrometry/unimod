@@ -22,8 +22,9 @@ test_that(".aminoacids", {
         '</umod:unimod>'
     ))
     d <- data.frame(
+        OneLetter=c("A", "C"),
         ThreeLetter=c("Ala", "Cys"),
-        Name=c("Alanine", "Cysteine"),
+        FullName=c("Alanine", "Cysteine"),
         AvgMass=c(71.0779, 103.1429),
         MonoMass=c(71.037114, 103.009185),
         H=c(5L, 5L),

@@ -27,8 +27,9 @@
     }))
 
     d <- data.frame(
+        OneLetter=aa[, "title"],
         ThreeLetter=aa[, "three_letter"],
-        Name=aa[, "full_name"],
+        FullName=aa[, "full_name"],
         AvgMass=as.double(aa[, "avge_mass"]),
         MonoMass=as.double(aa[, "mono_mass"]),
         row.names=aa[, "title"],

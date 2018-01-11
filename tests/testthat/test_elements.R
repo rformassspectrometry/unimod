@@ -10,7 +10,8 @@ test_that(".elements", {
         '</umod:elements>',
         '</umod:unimod>'))
     d <- data.frame(
-        Name=c("Hydrogen", "Deuterium"),
+        Name=c("H", "2H"),
+        FullName=c("Hydrogen", "Deuterium"),
         AvgMass=c(1.00794, 2.014101779),
         MonoMass=c(1.007825035, 2.014101779),
         row.names=c("H", "2H"),
