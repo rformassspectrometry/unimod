@@ -1,62 +1,94 @@
-#' internal function to query title/id/lastmod
+#' Internal function to query title/id/lastmod.
 #'
 #' @param xml xml_nodeset, <mod>
 #' @return double
 #' @noRd
 .title <- function(xml) {
-  setNames(xml_attrs(xml)[c("record_id", "title", "full_name",
-                            "date_time_modified", "approved")],
-           c("id", "name", "description", "lastModified", "approved"))
+    stopifnot(requireNamespace("xml2"))
+    xml2::xml_attrs(xml)[c("record_id", "title", "full_name",
+                           "date_time_modified", "approved")]
 }
 
-#' internal function to query delta mass
+#' Internal function to query delta mass.
 #'
 #' @param xml xml_nodeset, <mod>
 #' @return double
 #' @noRd
 .delta <- function(xml) {
-  node <- xml_find_first(xml, ".//umod:delta")
-  setNames(as.double(xml_attrs(node)[c("avge_mass", "mono_mass")]),
-           c("avgMass", "monoMass"))
+    stopifnot(requireNamespace("xml2"))
+    node <- xml2::xml_find_first(xml, ".//umod:delta")
+    xml2::xml_attrs(node)[c("avge_mass", "mono_mass", "composition")]
 }
 
-#' internal function to query composition
+#' Internal function to query specificity.
 #'
 #' @param xml xml_nodeset, <mod>
-#' @return list, delta masses and composition as named vector
-#' @noRd
-.composition <- function(xml) {
-  nodes <- xml_find_all(xml, ".//umod:delta/umod:element")
-  composition <- do.call(rbind, xml_attrs(nodes))
-  setNames(as.integer(composition[, "number"]), composition[, "symbol"])
-}
-
-#' internal function to query specificity
-#'
-#' @param xml xml_nodeset, <mod>
-#' @return data.frame
+#' @return matrix
 #' @noRd
 .specificity <- function(xml) {
-  nodes <- xml_find_all(xml, ".//umod:specificity")
-  sp <- do.call(rbind, xml_attrs(nodes))
-  sp <- sp[order(as.numeric(sp[, "spec_group"])),, drop=FALSE]
-  data.frame(site=sp[, "site"],
-             position=sp[, "position"],
-             classification=sp[, "classification"],
-             hidden=sp[, "hidden"] == "1",
-             group=as.integer(sp[, "spec_group"]),
-             stringsAsFactors=FALSE, row.names=seq(nrow(sp)))
+    stopifnot(requireNamespace("xml2"))
+    nodes <- xml2::xml_find_all(xml, ".//umod:specificity")
+    sp <- do.call(rbind, xml2::xml_attrs(nodes))
+    sp[order(as.numeric(sp[, "spec_group"])),, drop=FALSE]
 }
 
-#' internal function to query references
+#' Internal function to query neutral loss.
 #'
-#' @param xml xml_nodeset, <mod>
+#' @param xml xml_nodeset, <umod:specificity>
+#' @return matrix
+#' @noRd
+.neutralLoss <- function(xml) {
+    stopifnot(requireNamespace("xml2"))
+    nodes <- xml2::xml_find_all(xml, ".//umod:NeutralLoss")
+    nl <- do.call(rbind, lapply(nodes, function(nd) {
+        c(
+            xml2::xml_attrs(xml2::xml_parent(nd))[c("site", "spec_group")],
+            xml2::xml_attrs(nd)[c("avge_mass", "mono_mass", "composition")]
+        )
+    }))
+    nl[nl[, "composition"] != "0",, drop=FALSE]
+}
+
+#' Internal function to turn unimod xml into a data.frame.
+#'
+#' @param xml xml_document (returned by .unimodDb)
 #' @return data.frame
 #' @noRd
-.xref <- function(xml) {
-  nodes <- xml_find_all(xml, ".//umod:xref")
-  data.frame(text=xml_text(xml_find_all(nodes, ".//umod:text")),
-             source=xml_text(xml_find_all(nodes, ".//umod:source")),
-             url=xml_text(xml_find_all(nodes, ".//umod:url")),
-             stringsAsFactors=FALSE)
+.modifications <- function(xml) {
+    stopifnot(requireNamespace("xml2"))
+    nodes <- xml2::xml_find_all(xml, "//umod:mod")
+    u  <- lapply(nodes, function(n) {
+        td <- c(.title(n), .delta(n))
+        sp <- .specificity(n)
+        m <- cbind(matrix(td, ncol=length(td), nrow=nrow(sp), byrow=TRUE,
+                          dimnames=list(c(), names(td))), sp, neutralLoss="0")
+        nl <- .neutralLoss(n)
+        if (!is.null(nl) && nrow(nl)) {
+            nlrepl <- match(
+                paste(nl[, "site"], nl[, "spec_group"]),
+                paste(m[, "site"], m[, "spec_group"])
+            )
+            nl <- cbind(nl, neutralLoss="1")
+            mnr <- nrow(m)
+            m <- rbind(m, m[nlrepl,,drop=FALSE])
+            m[(mnr + 1L):nrow(m), colnames(nl)] <- nl
+        }
+        m
+    })
+    u <- do.call(rbind, u)
+    data.frame(
+        Id=as.numeric(u[, "record_id"]),
+        Name=u[, "title"],
+        Description=u[, "full_name"],
+        Composition=u[, "composition"],
+        AvgMass=as.numeric(u[, "avge_mass"]),
+        MonoMass=as.numeric(u[, "mono_mass"]),
+        Site=u[, "site"],
+        Position=factor(u[, "position"]),
+        Classification=factor(u[, "classification"]),
+        SpecGroup=u[, "spec_group"],
+        LastModified=u[, "date_time_modified"],
+        Approved=as.logical(as.numeric(u[, "approved"])),
+        Hidden=as.logical(as.numeric(u[, "hidden"])),
+        stringsAsFactors=FALSE)
 }
