@@ -5,9 +5,9 @@
 .elements <- function(xml) {
   elem <- xml_find_all(xml, "//umod:elements/umod:elem")
   m <- do.call(rbind, xml_attrs(elem))
-  data.frame(name=m[, "full_name"],
-             avgMass=as.double(m[, "avge_mass"]),
-             monoMass=as.double(m[, "mono_mass"]),
+  data.frame(Name=m[, "full_name"],
+             AvgMass=as.double(m[, "avge_mass"]),
+             MonoMass=as.double(m[, "mono_mass"]),
              row.names=m[, "title"],
              stringsAsFactors=FALSE)
 }

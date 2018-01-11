@@ -8,9 +8,9 @@ test_that(".elements", {
     '<umod:elem title="2H" full_name="Deuterium" avge_mass="2.014101779" mono_mass="2.014101779"/>',
     '</umod:elements>',
     '</umod:unimod>'))
-  d <- data.frame(name=c("Hydrogen", "Deuterium"),
-                  avgMass=c(1.00794, 2.014101779),
-                  monoMass=c(1.007825035, 2.014101779),
+  d <- data.frame(Name=c("Hydrogen", "Deuterium"),
+                  AvgMass=c(1.00794, 2.014101779),
+                  MonoMass=c(1.007825035, 2.014101779),
                   row.names=c("H", "2H"),
                   stringsAsFactors=FALSE)
   expect_equal(unimod:::.elements(x), d)

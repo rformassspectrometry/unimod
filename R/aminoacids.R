@@ -24,10 +24,10 @@
     e
   }))
 
-  d <- data.frame(threeLetter=aa[, "three_letter"],
-                  name=aa[, "full_name"],
-                  avgMass=as.double(aa[, "avge_mass"]),
-                  monoMass=as.double(aa[, "mono_mass"]),
+  d <- data.frame(ThreeLetter=aa[, "three_letter"],
+                  Name=aa[, "full_name"],
+                  AvgMass=as.double(aa[, "avge_mass"]),
+                  MonoMass=as.double(aa[, "mono_mass"]),
                   row.names=aa[, "title"],
                   stringsAsFactors=FALSE)
   cbind(d, em)
