@@ -86,7 +86,7 @@
         Site=u[, "site"],
         Position=factor(u[, "position"]),
         Classification=factor(u[, "classification"]),
-        SpecGroup=u[, "spec_group"],
+        SpecGroup=as.numeric(u[, "spec_group"]),
         LastModified=u[, "date_time_modified"],
         Approved=as.logical(as.numeric(u[, "approved"])),
         Hidden=as.logical(as.numeric(u[, "hidden"])),
