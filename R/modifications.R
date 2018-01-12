@@ -1,14 +1,3 @@
-#' Internal function to query title/id/lastmod.
-#'
-#' @param xml xml_nodeset, <mod>
-#' @return double
-#' @noRd
-.title <- function(xml) {
-    stopifnot(requireNamespace("xml2"))
-    xml2::xml_attrs(xml)[c("record_id", "title", "full_name",
-                           "date_time_modified", "approved")]
-}
-
 #' Internal function to query delta mass.
 #'
 #' @param xml xml_nodeset, <mod>
@@ -18,35 +7,6 @@
     stopifnot(requireNamespace("xml2"))
     node <- xml2::xml_find_first(xml, ".//umod:delta")
     xml2::xml_attrs(node)[c("avge_mass", "mono_mass", "composition")]
-}
-
-#' Internal function to query specificity.
-#'
-#' @param xml xml_nodeset, <mod>
-#' @return matrix
-#' @noRd
-.specificity <- function(xml) {
-    stopifnot(requireNamespace("xml2"))
-    nodes <- xml2::xml_find_all(xml, ".//umod:specificity")
-    sp <- do.call(rbind, xml2::xml_attrs(nodes))
-    sp[order(as.numeric(sp[, "spec_group"])),, drop=FALSE]
-}
-
-#' Internal function to query neutral loss.
-#'
-#' @param xml xml_nodeset, <umod:specificity>
-#' @return matrix
-#' @noRd
-.neutralLoss <- function(xml) {
-    stopifnot(requireNamespace("xml2"))
-    nodes <- xml2::xml_find_all(xml, ".//umod:NeutralLoss")
-    nl <- do.call(rbind, lapply(nodes, function(nd) {
-        c(
-            xml2::xml_attrs(xml2::xml_parent(nd))[c("site", "spec_group")],
-            xml2::xml_attrs(nd)[c("avge_mass", "mono_mass", "composition")]
-        )
-    }))
-    nl[nl[, "composition"] != "0",, drop=FALSE]
 }
 
 #' Internal function to turn unimod xml into a data.frame.
@@ -91,4 +51,44 @@
         Approved=as.logical(as.numeric(u[, "approved"])),
         Hidden=as.logical(as.numeric(u[, "hidden"])),
         stringsAsFactors=FALSE)
+}
+
+#' Internal function to query neutral loss.
+#'
+#' @param xml xml_nodeset, <umod:specificity>
+#' @return matrix
+#' @noRd
+.neutralLoss <- function(xml) {
+    stopifnot(requireNamespace("xml2"))
+    nodes <- xml2::xml_find_all(xml, ".//umod:NeutralLoss")
+    nl <- do.call(rbind, lapply(nodes, function(nd) {
+        c(
+            xml2::xml_attrs(xml2::xml_parent(nd))[c("site", "spec_group")],
+            xml2::xml_attrs(nd)[c("avge_mass", "mono_mass", "composition")]
+        )
+    }))
+    nl[nl[, "composition"] != "0",, drop=FALSE]
+}
+
+#' Internal function to query specificity.
+#'
+#' @param xml xml_nodeset, <mod>
+#' @return matrix
+#' @noRd
+.specificity <- function(xml) {
+    stopifnot(requireNamespace("xml2"))
+    nodes <- xml2::xml_find_all(xml, ".//umod:specificity")
+    sp <- do.call(rbind, xml2::xml_attrs(nodes))
+    sp[order(as.numeric(sp[, "spec_group"])),, drop=FALSE]
+}
+
+#' Internal function to query title/id/lastmod.
+#'
+#' @param xml xml_nodeset, <mod>
+#' @return double
+#' @noRd
+.title <- function(xml) {
+    stopifnot(requireNamespace("xml2"))
+    xml2::xml_attrs(xml)[c("record_id", "title", "full_name",
+                           "date_time_modified", "approved")]
 }
