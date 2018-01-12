@@ -47,6 +47,52 @@ test_that(".delta", {
     expect_equal(unimod:::.delta(node), delta)
 })
 
+test_that(".modifications", {
+    m <- data.frame(Id=1, Name="Acetyl", Description="Acetylation",
+                    Composition="H(2) C(2) O",
+                    AvgMass=42.0367, MonoMass=42.010565,
+                    Site=c("N-term", "C", "S"),
+                    Position=factor(c("Any N-term", "Anywhere", "Anywhere")),
+                    Classification=factor(c("Multiple", "Post-translational",
+                                            "Post-translational")),
+                    SpecGroup=2:4, LastModified="2008-02-15 05:20:02",
+                    Approved=TRUE, Hidden=c(FALSE, TRUE, TRUE),
+                    stringsAsFactors=FALSE)
+    expect_equal(unimod:::.modifications(x), m)
+})
+
+test_that(".neutralLoss", {
+    node <- xml2::read_xml(paste0(
+'<umod:unimod xmlns:umod="http://www.unimod.org/xmlns/schema/unimod_2">',
+'<umod:modifications>',
+'<umod:mod title="Phospho" full_name="Phosphorylation" username_of_poster="unimod"',
+'   group_of_poster="admin"',
+'   date_time_posted="2002-08-19 19:17:11"',
+'   date_time_modified="2011-11-25 10:55:54"',
+'   approved="1"',
+'   record_id="21">',
+'<umod:specificity hidden="0" site="T" position="Anywhere" classification="Post-translational" spec_group="1">',
+'<umod:NeutralLoss mono_mass="97.976896" avge_mass="97.9952" flag="false" composition="H(3) O(4) P">',
+'<umod:element symbol="H" number="3"/>',
+'<umod:element symbol="O" number="4"/>',
+'<umod:element symbol="P" number="1"/>',
+'</umod:NeutralLoss>',
+'<umod:NeutralLoss mono_mass="0.000000" avge_mass="0.0000" flag="false" composition="0"/>',
+'</umod:specificity>',
+'<umod:delta mono_mass="79.966331" avge_mass="79.9799" composition="H O(3) P">',
+'<umod:element symbol="H" number="1"/>',
+'<umod:element symbol="O" number="3"/>',
+'<umod:element symbol="P" number="1"/>',
+'</umod:delta>',
+'</umod:mod>',
+'</umod:modifications>',
+'</umod:unimod>'))
+    nl <- matrix(c("T", "1", "97.9952", "97.976896", "H(3) O(4) P"), nrow=1,
+                 dimnames=list(c(), c("site", "spec_group",
+                                      "avge_mass", "mono_mass", "composition")))
+    expect_equal(unimod:::.neutralLoss(node), nl)
+})
+
 test_that(".specificity", {
     expect_equal(unimod:::.specificity(node), sp)
 
@@ -67,3 +113,4 @@ test_that(".specificity", {
 '</umod:unimod>')), "//umod:mod")
     expect_equal(unimod:::.specificity(node2), sp2)
 })
+
