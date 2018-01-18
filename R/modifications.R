@@ -1,3 +1,24 @@
+#' Internal character id for unimod entries
+#'
+#' @param name character, unimod title
+#' @param site character, unimod site
+#' @param position character, unimod position
+#' @param neutralLoss character, "0"/"1"
+#' @return character
+#' @noRd
+.characterId <- function(name, site, position, neutralLoss) {
+    stopifnot(is.character(name))
+    stopifnot(is.character(site))
+    stopifnot(is.character(position))
+    stopifnot(is.character(neutralLoss))
+    paste0(
+        name, ":",
+        ifelse(grepl("Protein", position), "P-", ""),
+        site,
+        ifelse(neutralLoss == "1", ":NL", "")
+    )
+}
+
 #' Internal function to query delta mass.
 #'
 #' @param xml xml_nodeset, <mod>

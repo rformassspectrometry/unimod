@@ -35,10 +35,20 @@ sp <- cbind(
     spec_group=as.character(2:4)
 )
 
-test_that(".title", {
-    title <- c(record_id="1", title="Acetyl", full_name="Acetylation",
-               date_time_modified="2008-02-15 05:20:02", approved="1")
-    expect_equal(unimod:::.title(node), title)
+test_that(".characterId", {
+    expect_error(unimod:::.characterId(1:10, "foo", "bar", "0"))
+    expect_error(unimod:::.characterId("foo", 1:10, "bar", "0"))
+    expect_error(unimod:::.characterId("foo", "bar", 1:10, "0"))
+    expect_error(unimod:::.characterId("foo", "bar", "0", 1:10))
+    expect_equal(
+        unimod:::.characterId(
+            rep("Acetyl", 4),
+            c("K", "S", "N-term", "N-term"),
+            c("Anywhere", "Anywhere", "Any N-term", "Protein N-term"),
+            c("0", "1", "0", "0")
+        ),
+        c("Acetyl:K", "Acetyl:S:NL", "Acetyl:N-term", "Acetyl:P-N-term")
+    )
 })
 
 test_that(".delta", {
@@ -114,3 +124,8 @@ test_that(".specificity", {
     expect_equal(unimod:::.specificity(node2), sp2)
 })
 
+test_that(".title", {
+    title <- c(record_id="1", title="Acetyl", full_name="Acetylation",
+               date_time_modified="2008-02-15 05:20:02", approved="1")
+    expect_equal(unimod:::.title(node), title)
+})
