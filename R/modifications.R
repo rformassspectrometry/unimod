@@ -42,14 +42,14 @@
         td <- c(.title(n), .delta(n))
         sp <- .specificity(n)
         m <- cbind(matrix(td, ncol=length(td), nrow=nrow(sp), byrow=TRUE,
-                          dimnames=list(c(), names(td))), sp, neutralLoss="0")
+                          dimnames=list(c(), names(td))), sp, NeutralLoss="0")
         nl <- .neutralLoss(n)
         if (!is.null(nl) && nrow(nl)) {
             nlrepl <- match(
                 paste(nl[, "site"], nl[, "spec_group"]),
                 paste(m[, "site"], m[, "spec_group"])
             )
-            nl <- cbind(nl, neutralLoss="1")
+            nl <- cbind(nl, NeutralLoss="1")
             mnr <- nrow(m)
             m <- rbind(m, m[nlrepl,,drop=FALSE])
             m[(mnr + 1L):nrow(m), colnames(nl)] <- nl
@@ -57,8 +57,11 @@
         m
     })
     u <- do.call(rbind, u)
-    data.frame(
-        Id=as.numeric(u[, "record_id"]),
+    m <- data.frame(
+        Id=.characterId(
+            u[, "title"], u[, "site"], u[, "position"], u[, "NeutralLoss"]
+        ),
+        UnimodId=as.numeric(u[, "record_id"]),
         Name=u[, "title"],
         Description=u[, "full_name"],
         Composition=u[, "composition"],
@@ -68,10 +71,12 @@
         Position=factor(u[, "position"]),
         Classification=factor(u[, "classification"]),
         SpecGroup=as.numeric(u[, "spec_group"]),
+        NeutralLoss=as.logical(as.numeric(u[, "NeutralLoss"])),
         LastModified=u[, "date_time_modified"],
         Approved=as.logical(as.numeric(u[, "approved"])),
         Hidden=as.logical(as.numeric(u[, "hidden"])),
-        stringsAsFactors=FALSE)
+        stringsAsFactors=FALSE
+    )
 }
 
 #' Internal function to query neutral loss.

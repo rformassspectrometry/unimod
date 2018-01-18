@@ -58,14 +58,17 @@ test_that(".delta", {
 })
 
 test_that(".modifications", {
-    m <- data.frame(Id=1, Name="Acetyl", Description="Acetylation",
+    m <- data.frame(Id=c("Acetyl:N-term", "Acetyl:C", "Acetyl:S"),
+                    UnimodId=1, Name="Acetyl", Description="Acetylation",
                     Composition="H(2) C(2) O",
                     AvgMass=42.0367, MonoMass=42.010565,
                     Site=c("N-term", "C", "S"),
                     Position=factor(c("Any N-term", "Anywhere", "Anywhere")),
                     Classification=factor(c("Multiple", "Post-translational",
                                             "Post-translational")),
-                    SpecGroup=2:4, LastModified="2008-02-15 05:20:02",
+                    SpecGroup=2:4,
+                    NeutralLoss=FALSE,
+                    LastModified="2008-02-15 05:20:02",
                     Approved=TRUE, Hidden=c(FALSE, TRUE, TRUE),
                     stringsAsFactors=FALSE)
     expect_equal(unimod:::.modifications(x), m)

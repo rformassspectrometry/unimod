@@ -69,9 +69,11 @@
 #' unimod:::.createDataSets()
 #' ```
 #'
-#' @format A `data.frame` with 13 columns (Id, Name, Description,
-#' AvgMass, MonoMass, Site, Position, Classification, SpecGroup,
-#' LastModification, Approved, Hidden) for the modifications.
+#' @format A `data.frame` with 15 columns (Id (created by
+#' Name:(Position-)Site(:NeutralLoss) because unimod id is not unique),
+#' UnimodId, Name, Description, AvgMass, MonoMass, Site, Position,
+#' Classification, SpecGroup, NeutralLoss, LastModification, Approved,
+#' Hidden) for the modifications.
 #' @source Taken from the unimod database: http://www.unimod.org/xml/unimod.xml.
 #' @examples
 #' data(modifications)
