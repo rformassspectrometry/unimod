@@ -36,6 +36,10 @@
 #' @return list of single characters
 #' @noRd
 .string2character <- function(x) {
+    stopifnot(
+        is.character(x) ||
+        class(x) %in% c("AAString", "AAStringSet", "AAStringSetList")
+    )
     if (is(x, "AAStringSetList")) {
         x <- unlist(x)
     }

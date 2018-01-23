@@ -18,4 +18,5 @@ biocViews: Proteomics, MassSpectrometry
 BugReports: https://github.com/ComputationalProteomicsUnit/unimod/issues
 URL: https://github.com/ComputationalProteomicsUnit/unimod
 RoxygenNote: 6.0.1.9000
+LazyData: true
 Encoding: UTF-8

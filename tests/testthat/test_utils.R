@@ -15,6 +15,7 @@ test_that(".character2composition", {
 })
 
 test_that(".string2character", {
+    expect_error(unimod:::.string2character(1:3))
     expect_equal(unimod:::.string2character(c(a="ABC", b="DEF")),
                  list(a=c("A", "B", "C"), b=c("D", "E", "F")))
     skip_if_not_installed("Biostrings")
