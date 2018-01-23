@@ -7,7 +7,7 @@
 .aamass <- function(x, type=c("MonoMass", "AvgMass")) {
     m <- aminoacids[, match.arg(type)]
     names(m) <- aminoacids$OneLetter
-    lapply(.string2character(x), function(xx)m[xx])
+    vapply(.string2character(x), function(xx)sum(m[xx]), NA_real_)
 }
 
 #' Calculate a single modification for a given sequence
@@ -100,10 +100,9 @@
 #'
 #' @param x character, sequence
 #' @param site character
-#' @param fixed logical
 #' @return numeric
 #' @noRd
-.countSite <- function(x, site, fixed=TRUE) {
+.countSite <- function(x, site) {
     stopifnot(is.character(x) && is.character(site) && length(site) == 1L)
     if (endsWith(site, "term")) {
         rep.int(1L, length(x))
@@ -126,30 +125,51 @@
 #' @param variableModifications data.frame
 #' @return list of numeric (mass values)
 #' @noRd
-#.mass <- function(x, type=c("MonoMass", "AvgMass"),
-#                  fixedModifications=NULL,
-#                  variableModifications=NULL) {
-#    if (is.character(fixedModifications)) {
-#        i <- match(fixedModifications, modifications$Id)
-#        if (anyNA(i)) {
-#            stop("Given 'fixedModifications' are not part of the ",
-#                 "unimod::modifications data set!")
-#        }
-#        modifications <- modifications[i,]
-#    }
-#
-#    if (is.data.frame(fixedModifications)) {
-#        if (!all(c("Id", type, "Site") %in% colnames(fixedModifications))) {
-#            stop("The 'fixedModifications' `data.frame` has to have at least ",
-#                 "the columns 'Id', 'MonoMass'/'AvgMass', and 'Site'!")
-#        }
-#        modifications <- fixedModifications
-#    } else if (!is.null(fixedModifications)) {
-#        stop("'fixedModifications' must be a `character`, `data.frame`, or ",
-#             "`NULL`!")
-#    }
-#
-#    type <- match.arg(type)
-#    m <- .aamass(x, type)
-#}
-#
+.mass <- function(x, type=c("MonoMass", "AvgMass"),
+                  fixedModifications=NULL,
+                  variableModifications=NULL) {
+    if (is.character(fixedModifications)) {
+        i <- match(fixedModifications, modifications$Id)
+        if (anyNA(i)) {
+            stop(
+                paste0(fixedModifications[is.na(i)], collapse=", "),
+                ifelse(sum(is.na(i)) == 1L, " is ", " are "),
+                "not part of the unimod::modifications data set!"
+            )
+        }
+        isUnimod <- TRUE
+        fixedModifications <- modifications[i,,drop=FALSE]
+    } else if (is.data.frame(fixedModifications)) {
+        if (!all(c("Id", type, "Site") %in% colnames(fixedModifications))) {
+            stop("The 'fixedModifications' `data.frame` has to have at least ",
+                 "the columns 'Id', '", type, "', and 'Site'!")
+        }
+        isUnimod <- all(fixedModifications$Id %in% modification$Id)
+    } else if (!is.null(fixedModifications)) {
+        stop("'fixedModifications' must be a `character`, `data.frame`, or ",
+             "`NULL`!")
+    }
+
+    if (!is.null(variableModifications)) {
+        stop("Variable Modifications are not supported yet!")
+    }
+
+    type <- match.arg(type)
+    m <- .aamass(x, type)
+
+    if (anyDuplicated(fixedModifications$Site)) {
+        stop("Duplicated fixed modification sites are not allowed!")
+    }
+
+    for (i in seq_len(nrow(fixedModifications))) {
+        if (isUnimod) {
+            m <- m + .unimodMass(x, fixedModifications$Id[i], type=type)
+            x <- .unimodSequence(x, fixedModifications$Id[i])
+        } else {
+            m <- m + .countSite(x, fixedModifications$Site[i]) *
+                fixedModifications[i, type]
+        }
+    }
+    m
+}
+

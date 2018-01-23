@@ -4,13 +4,10 @@ test_that(".aamass", {
     expect_error(unimod:::.aamass(1:3))
     expect_error(unimod:::.aamass("ACE", "FOO"))
     expect_equal(unimod:::.aamass("ACE"), unimod:::.aamass("ACE", "MonoMass"))
-    expect_equal(unimod:::.aamass("ACE")[[1]],
-                 c(A=71.037114, C=103.009185, E=129.042593))
-    expect_equal(unimod:::.aamass("ACE", "AvgMass")[[1]],
-                 c(A=71.0779, C=103.1429, E=129.1140))
+    expect_equal(unimod:::.aamass("ACE"), 303.088892)
+    expect_equal(unimod:::.aamass("ACE", "AvgMass"), 303.3348)
     expect_equal(unimod:::.aamass(c(foo="ACE", bar="CEA")),
-                 list(foo=c(A=71.037114, C=103.009185, E=129.042593),
-                      bar=c(C=103.009185, E=129.042593, A=71.037114)))
+                 c(foo=303.088892, bar=303.088892))
 })
 
 test_that(".unimodMass", {
@@ -53,10 +50,18 @@ test_that(".unimodSequence", {
 })
 
 test_that(".mass", {
-    #expect_error(.mass(1:3))
-    #expect_error(.mass("ACE", "FOO"))
-    #expect_error(.mass("ACE", fixedModifications="FOO"), "are not part")
-    #expect_error(.mass("ACE", fixedModifications=1:3), "must be a `character`")
+    expect_error(unimod:::.mass(1:3))
+    expect_error(unimod:::.mass("ACE", "FOO"))
+    expect_error(unimod:::.mass("ACE", fixedModifications="FOO"), "is not part")
+    expect_error(unimod:::.mass("ACE",
+                                fixedModifications=c("FOO", "Met-loss:P-M",
+                                                     "BAR")), "are not part")
+    expect_error(unimod:::.mass("ACE", fixedModifications=1:3),
+                 "must be a `character`")
+    expect_error(unimod:::.mass("ACE",
+                                fixedModifications=c("Acetyl:K",
+                                                     "Carbamidomethyl:K"),
+                       "Duplicated modification sites are not allowed"))
 })
 
 test_that(".countSite", {
