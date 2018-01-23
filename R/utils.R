@@ -29,3 +29,20 @@
     }
     paste0(names(x), "(", x, ")", collapse=" ")
 }
+
+#' Splits a string into a character vector
+#'
+#' @param x character, (AAString), (AAStringSet)
+#' @return list of single characters
+#' @noRd
+.string2character <- function(x) {
+    if (is(x, "AAStringSetList")) {
+        x <- unlist(x)
+    }
+    ## if we always apply as.character the names of original characters are
+    ## removed
+    if (!is.character(x)) {
+        x <- as.character(x)
+    }
+    strsplit(x, split=character(), fixed=TRUE)
+}
