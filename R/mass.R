@@ -128,6 +128,8 @@
 .mass <- function(x, type=c("MonoMass", "AvgMass"),
                   fixedModifications=NULL,
                   variableModifications=NULL) {
+    type <- match.arg(type)
+
     if (is.character(fixedModifications)) {
         i <- match(fixedModifications, modifications$Id)
         if (anyNA(i)) {
@@ -144,7 +146,7 @@
             stop("The 'fixedModifications' `data.frame` has to have at least ",
                  "the columns 'Id', '", type, "', and 'Site'!")
         }
-        isUnimod <- all(fixedModifications$Id %in% modification$Id)
+        isUnimod <- all(fixedModifications$Id %in% modifications$Id)
     } else if (!is.null(fixedModifications)) {
         stop("'fixedModifications' must be a `character`, `data.frame`, or ",
              "`NULL`!")
@@ -154,7 +156,6 @@
         stop("Variable Modifications are not supported yet!")
     }
 
-    type <- match.arg(type)
     m <- .aamass(x, type)
 
     if (anyDuplicated(fixedModifications$Site)) {
