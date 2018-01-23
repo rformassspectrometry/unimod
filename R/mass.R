@@ -161,15 +161,18 @@
         stop("Duplicated fixed modification sites are not allowed!")
     }
 
-    for (i in seq_len(nrow(fixedModifications))) {
-        if (isUnimod) {
-            m <- m + .unimodMass(x, fixedModifications$Id[i], type=type)
-            x <- .unimodSequence(x, fixedModifications$Id[i])
-        } else {
-            m <- m + .countSite(x, fixedModifications$Site[i]) *
-                fixedModifications[i, type]
+    if (!is.null(fixedModifications)) {
+        for (i in seq_len(nrow(fixedModifications))) {
+            if (isUnimod) {
+                m <- m + .unimodMass(x, fixedModifications$Id[i], type=type)
+                x <- .unimodSequence(x, fixedModifications$Id[i])
+            } else {
+                m <- m + .countSite(x, fixedModifications$Site[i]) *
+                    fixedModifications[i, type]
+            }
         }
     }
+    attr(m, "sequence") <- x
     m
 }
 

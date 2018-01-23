@@ -61,7 +61,24 @@ test_that(".mass", {
     expect_error(unimod:::.mass("ACE",
                                 fixedModifications=c("Acetyl:K",
                                                      "Carbamidomethyl:K"),
-                       "Duplicated modification sites are not allowed"))
+                       "Duplicated fixed modification sites are not allowed"))
+    r <- 303.088892
+    attr(r, "sequence") <- "ACE"
+    expect_equal(unimod:::.mass("ACE"), r)
+    expect_equal(unimod:::.mass("ACE", fixedModifications="Acetyl:K"), r)
+    r <- 345.099457
+    attr(r, "sequence") <- "ACE"
+    expect_equal(unimod:::.mass("ACE", fixedModifications="Acetyl:N-term"), r)
+    expect_equal(unimod:::.mass("MACE",
+                                fixedModifications="Met-loss+Acetyl:P-M"), r)
+    r <- 402.120921
+    attr(r, "sequence") <- "ACE"
+    expect_equal(unimod:::.mass("ACE",
+                                fixedModifications=c("Acetyl:N-term",
+                                                     "Carbamidomethyl:C")), r)
+    r <- 478.119206
+    attr(r, "sequence") <- "MDCE"
+    expect_equal(unimod:::.mass("MDCE", fixedModifications="Met-loss+Acetyl:P-M"), r)
 })
 
 test_that(".countSite", {
