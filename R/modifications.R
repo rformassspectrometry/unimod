@@ -77,6 +77,8 @@
         Hidden=as.logical(as.numeric(u[, "hidden"])),
         stringsAsFactors=FALSE
     )
+    rownames(m) <- m$Id
+    m
 }
 
 #' Internal function to query neutral loss.

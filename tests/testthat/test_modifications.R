@@ -71,6 +71,7 @@ test_that(".modifications", {
                     LastModified="2008-02-15 05:20:02",
                     Approved=TRUE, Hidden=c(FALSE, TRUE, TRUE),
                     stringsAsFactors=FALSE)
+    rownames(m) <- m$Id
     expect_equal(unimod:::.modifications(x), m)
 })
 
