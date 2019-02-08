@@ -103,17 +103,16 @@
 #' @return numeric
 #' @noRd
 .countSite <- function(x, site) {
-    stopifnot(is.character(x) && is.character(site) && length(site) == 1L)
     if (endsWith(site, "term")) {
         rep.int(1L, length(x))
     } else {
         nchar(x) - nchar(gsub(site, "", x, fixed=TRUE))
         ## while looking a little bit odd it is much faster than:
-        # vapply(
-        #     gregexpr(pattern=site, text=x, fixed=fixed),
-        #     function(rx)sum(rx > 0L), double(1L),
-        #     USE.NAMES=FALSE
-        # )
+    # vapply(
+    #     gregexpr(pattern=site, text=x, fixed=fixed),
+    #     function(rx)sum(rx > 0L), double(1L),
+    #     USE.NAMES=FALSE
+    # )
     }
 }
 
@@ -125,7 +124,7 @@
 #' @param variableModifications data.frame
 #' @return list of numeric (mass values)
 #' @noRd
-.mass <- function(x, type=c("MonoMass", "AvgMass"),
+..mass <- function(x, type=c("MonoMass", "AvgMass"),
                   fixedModifications=NULL,
                   variableModifications=NULL) {
     type <- match.arg(type)

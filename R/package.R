@@ -48,4 +48,5 @@
 #' @keywords package
 #'
 #' @importFrom utils packageVersion
+#' @import Biostrings
 NULL

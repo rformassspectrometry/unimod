@@ -50,3 +50,9 @@
     }
     strsplit(x, split=character(), fixed=TRUE)
 }
+
+.nrows <- function(x)vapply(x, nrow, NA_real_)
+
+.combn <- function(nSites, globalMaxN=5L, siteMaxN=3L) {
+    siteMaxN <- min(siteMaxN, globalMaxN)
+}

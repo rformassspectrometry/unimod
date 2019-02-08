@@ -11,12 +11,13 @@ Description: An interface to the community supported database for
 	     amino acide/protein modifications using mass
 	     spectrometry.
 Depends: R (>= 3.3)
+Imports: Biostrings
 Suggests: xml2, testthat, knitr
 License: GPL-3
 VignetteBuilder: knitr
 biocViews: Proteomics, MassSpectrometry
 BugReports: https://github.com/ComputationalProteomicsUnit/unimod/issues
 URL: https://github.com/ComputationalProteomicsUnit/unimod
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1
 LazyData: true
 Encoding: UTF-8
