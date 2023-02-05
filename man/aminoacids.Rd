@@ -4,9 +4,11 @@
 \name{aminoacids}
 \alias{aminoacids}
 \title{Amminoacids data set.}
-\format{A `data.frame` with 11 columns (OneLetter, ThreeLetter, FullName,
+\format{
+A `data.frame` with 11 columns (OneLetter, ThreeLetter, FullName,
 AvgMass, MonoMass, H, C, N, O S, Se) for the aminoacids. The H/C/N/O/S/Se
-columns contain the number of elements that build the aminoacid.}
+columns contain the number of elements that build the aminoacid.
+}
 \source{
 Taken from the unimod database: http://www.unimod.org/xml/unimod.xml.
 }

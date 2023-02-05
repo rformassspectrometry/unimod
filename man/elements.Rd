@@ -4,8 +4,10 @@
 \name{elements}
 \alias{elements}
 \title{Elements data set.}
-\format{A `data.frame` with 4 columns (Name, FullName, AvgMass, MonoMass) for
-the chemical elements.}
+\format{
+A `data.frame` with 4 columns (Name, FullName, AvgMass, MonoMass) for
+the chemical elements.
+}
 \source{
 Taken from the unimod database: http://www.unimod.org/xml/unimod.xml.
 }

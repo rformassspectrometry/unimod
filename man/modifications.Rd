@@ -4,11 +4,13 @@
 \name{modifications}
 \alias{modifications}
 \title{Modifications data set.}
-\format{A `data.frame` with 15 columns (Id (created by
+\format{
+A `data.frame` with 15 columns (Id (created by
 Name:(Position-)Site(:NeutralLoss) because unimod id is not unique),
 UnimodId, Name, Description, AvgMass, MonoMass, Site, Position,
 Classification, SpecGroup, NeutralLoss, LastModification, Approved,
-Hidden) for the modifications.}
+Hidden) for the modifications.
+}
 \source{
 Taken from the unimod database: http://www.unimod.org/xml/unimod.xml.
 }
