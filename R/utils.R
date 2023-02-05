@@ -34,6 +34,7 @@
 #'
 #' @param x character, (AAString), (AAStringSet)
 #' @return list of single characters
+#' @importFrom methods is
 #' @noRd
 .string2character <- function(x) {
     stopifnot(
