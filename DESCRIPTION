@@ -10,8 +10,8 @@ Authors@R: c(person(given = "Laurent", family = "Gatto",
 Description: An interface to the community supported database for
 	     amino acide/protein modifications using mass
 	     spectrometry.
-Depends: R (>= 3.3)
-Suggests: xml2, testthat, knitr
+Depends: R (>= 3.5), methods
+Suggests: xml2, testthat, knitr, Biostrings
 License: GPL-3
 VignetteBuilder: knitr
 biocViews: Proteomics, MassSpectrometry
