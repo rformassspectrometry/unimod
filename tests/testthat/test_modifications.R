@@ -36,10 +36,10 @@ sp <- cbind(
 )
 
 test_that(".characterId", {
-    expect_error(unimod:::.characterId(1:10, "foo", "bar", "0"))
-    expect_error(unimod:::.characterId("foo", 1:10, "bar", "0"))
-    expect_error(unimod:::.characterId("foo", "bar", 1:10, "0"))
-    expect_error(unimod:::.characterId("foo", "bar", "0", 1:10))
+    expect_error(unimod:::.characterId(1:10, "foo", "bar", "0"), "name")
+    expect_error(unimod:::.characterId("foo", 1:10, "bar", "0"), "site")
+    expect_error(unimod:::.characterId("foo", "bar", 1:10, "0"), "position")
+    expect_error(unimod:::.characterId("foo", "bar", "0", 1:10), "neutralLoss")
     expect_equal(
         unimod:::.characterId(
             rep("Acetyl", 4),
@@ -48,6 +48,15 @@ test_that(".characterId", {
             c("0", "1", "0", "0")
         ),
         c("Acetyl:K", "Acetyl:S:NL", "Acetyl:N-term", "Acetyl:P-N-term")
+    )
+    expect_equal(
+        unimod:::.characterId(
+            rep("Acetyl", 4),
+            c("K", "S", "N-term", "N-term"),
+            c("Anywhere", "Anywhere", "Any N-term", "Any N-term"),
+            c("0", "1", "0", "0")
+        ),
+        c("Acetyl:K", "Acetyl:S:NL", "Acetyl:N-term:1", "Acetyl:N-term:2")
     )
 })
 

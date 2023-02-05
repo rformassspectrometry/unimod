@@ -7,16 +7,29 @@
 #' @return character
 #' @noRd
 .characterId <- function(name, site, position, neutralLoss) {
-    stopifnot(is.character(name))
-    stopifnot(is.character(site))
-    stopifnot(is.character(position))
-    stopifnot(is.character(neutralLoss))
-    paste0(
+    if (!is.character(name))
+        stop("'name' has to be a character.")
+    if (!is.character(site))
+        stop("'site' has to be a character.")
+    if (!is.character(position))
+        stop("'position' has to be a character.")
+    if (!is.character(neutralLoss))
+        stop("'neutralLoss' has to be a character.")
+    id <- paste0(
         name, ":",
         ifelse(grepl("Protein", position), "P-", ""),
         site,
         ifelse(neutralLoss == "1", ":NL", "")
     )
+    if (anyDuplicated(id)) {
+        split(id, id) <- lapply(split(id, id), function(x) {
+            if (length(x) > 1)
+                paste0(x, ":", seq_along(x))
+            else
+                x
+        })
+    } 
+    id
 }
 
 #' Internal function to query delta mass.
