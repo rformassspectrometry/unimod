@@ -1,6 +1,6 @@
 Package: unimod
 Type: Package
-Version: 0.1
+Version: 0.2
 Title: Managing amino acid modifications for mass spectrometry
 Author: Laurent Gatto and Sebastian Gidd
 Authors@R: c(person(given = "Laurent", family = "Gatto",
